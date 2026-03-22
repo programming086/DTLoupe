@@ -3,6 +3,11 @@ Change Log
 
 This is the history of version updates.
 
+Version 1.5.9
+
+- FIXED: Orientation problem on iOS 9 and newer
+- UPDATED: Loupe graphics
+
 Version 1.5.8
 
 - FIXED: Invalid Geometry Crash fix

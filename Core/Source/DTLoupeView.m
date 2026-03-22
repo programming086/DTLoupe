@@ -134,7 +134,7 @@ NSString * const DTLoupeDidHide = @"DTLoupeDidHide";
 		
 		// maks for the loupe contents layer
 		_loupeContentsMaskLayer = [CALayer layer];
-		_loupeContentsMaskLayer.transform = CATransform3DMakeScale(1.0f, -1.0f, 1.0f);
+		_loupeContentsMaskLayer.transform = CATransform3DMakeScale(1.0f, 1.0f, 1.0f); // RWM
 		_loupeContentsMaskLayer.contentsScale = scale;
 		
 		// layer with contents of the loupe
@@ -197,7 +197,7 @@ CGAffineTransform CGAffineTransformAndScaleMake(CGFloat sx, CGFloat sy, CGFloat 
 	switch (style)
 	{
 		case DTLoupeStyleCircle:
-			return CGPointMake(0, -60.0);
+			return CGPointMake(0, -64.0);
 			
 		case DTLoupeStyleRectangle:
 			return CGPointMake(0, -30.0);
@@ -216,7 +216,7 @@ CGAffineTransform CGAffineTransformAndScaleMake(CGFloat sx, CGFloat sy, CGFloat 
 	{
 		case DTLoupeStyleCircle:
 		{
-			return CGPointMake(0, -4.0);
+			return CGPointMake(0, 0.0);
 		}
 		case DTLoupeStyleRectangle:
 		{
@@ -299,12 +299,11 @@ CGAffineTransform CGAffineTransformAndScaleMake(CGFloat sx, CGFloat sy, CGFloat 
 
 - (CGAffineTransform)_loupeWindowTransform
 {
-	// Only on iOS 8, we need to determine the rotation ourselves
-    NSString* systemVersion = [[UIDevice currentDevice] systemVersion];
-	if ([systemVersion length] > 0 &&
-        ![[systemVersion substringToIndex:1] isEqualToString:@"8"])
+	// On iOS 8 and newer, we need to determine the rotation ourselves
+	double systemVersion = [[[UIDevice currentDevice] systemVersion] doubleValue];
+	if (systemVersion > 0 && systemVersion < 8)
 	{
-		return _targetRootView.transform;
+	  return _targetRootView.transform;
 	}
     
 	UIInterfaceOrientation orientation = [self _inferredInterfaceOrientation];
